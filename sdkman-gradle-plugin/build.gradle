@@ -29,7 +29,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = 'https://github.com/renatoathaydes/sdkman-gradle-plugin'
+    website = 'https://renatoathaydes.github.io/sdkman-gradle-plugin/index.html'
     vcsUrl = 'https://github.com/renatoathaydes/sdkman-gradle-plugin'
     description = project.description
     tags = ['sdkman', 'jdk']
