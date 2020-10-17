@@ -1,0 +1,50 @@
+body {
+  font-family: "Gill Sans", sans-serif;
+  margin: 0;
+}
+
+header {
+  font-size: 2em;
+  padding: 2em;
+  background-color: #0076c6;
+  color: white;
+  text-shadow: 2px 2px 0px #FB2127;
+}
+
+main {
+  margin: auto;
+  padding: 0 1em 0 1em;
+  min-height: 20em;
+  max-width: 45em;
+  font-size: 20px;
+}
+
+footer {
+  padding: 1em;
+  background-color: #3333;
+}
+
+footer > div {
+    width: 100%;
+    text-align: center;
+    line-height: 1.4em;
+}
+
+pre {
+    padding: 1em;
+}
+
+code {
+    background: #eeeeee;
+    font-size: 0.7em;
+    padding: 0.2em;
+}
+
+figcaption {
+    font-size: small;
+    margin: 0.3em 0 0 0;
+}
+
+figure {
+    margin: 2em 0 2em 0;
+}

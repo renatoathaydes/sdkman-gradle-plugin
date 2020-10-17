@@ -3,12 +3,111 @@
 <head>
     <meta charset="utf-8">
     <title>Gradle SDKMAN! Plugin</title>
+    <link rel="stylesheet" href="sdkman-gradle-plugin/style.css">
 <body>
 <header>Gradle SDKMAN! Plugin</header>
-<main>
-    <p>TODO</p>
+<main><figure style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+    <img style="width: 48%;" src="sdkman-gradle-plugin/images/gradle.jpg" alt="Gradle Logo">
+    <img style="width: 48%;" src="sdkman-gradle-plugin/images/sdkman.svg" alt="SDKMAN! Logo">
+    <figcaption>Gradle and SDKMAN! working together to get your Java version managed automatically!</figcaption>
+</figure><p>This plugin makes sure that <a href="https://gradle.org">Gradle</a> is using a specific JDK, provided by <a href="https://sdkman.io">SDKMAN!</a>,
+to build your project.</p>
+
+<p>It does not run SDKMAN! itself, it only checks if the Java version you expect is being used (as explained below).</p>
+
+<p>Because SDKMAN!&rsquo;s JDK identifiers includes both a Java version and a vendor, with this plugin you can guarantee that
+your project will be compiled and tested against a specific JDK, like <code>11.0.2-open</code> or <code>11.0.8.fx-zulu</code>.</p>
+
+<h3>What does this Plugin check</h3>
+
+<p>This plugin checks the following:</p>
+
+<ul>
+<li>the project contains a <a href="https://sdkman.io/usage#env"><code>sdk env</code></a> file <code>.sdkmanrc</code>.</li>
+<li>the <code>.sdkmanrc</code> specifies a <code>java</code> property with a SDKMAN! JDK identifier.</li>
+<li>the Gradle process is running the JDK specified by <code>.sdkmanrc</code>.</li>
+<li>The <code>JAVA_HOME</code> environment variable is pointing to the same JDK.</li>
+<li>the project&rsquo;s <code>sourceCompatibility</code> is compatible with the JDK being used.</li>
+</ul>
+
+<p>This ensures that you never try to build your project with the wrong JDK, which can cause build errors, or worse,
+releasing a project that was tested on a different JVM.</p>
+
+<h3>Applying this Plugin</h3>
+
+<p>Add this plugin to your <code>plugins</code> block:</p>
+<pre style="color:#f8f8f2;background-color:#272822">plugins <span style="color:#f92672">{</span>
+    id <span style="color:#e6db74">&#39;com.athaydes.sdkman&#39;</span>
+<span style="color:#f92672">}</span>
+</pre>
+<p>Or using the older syntax:</p>
+<pre style="color:#f8f8f2;background-color:#272822">buildscript <span style="color:#f92672">{</span>
+    repositories <span style="color:#f92672">{</span>
+        maven <span style="color:#f92672">{</span>
+            url <span style="color:#e6db74">&#34;https://plugins.gradle.org/m2/&#34;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    dependencies <span style="color:#f92672">{</span>
+        classpath <span style="color:#e6db74">&#34;com.athaydes.gradle:sdkman-gradle-plugin:&lt;version&gt;&#34;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+apply plugin: <span style="color:#e6db74">&#39;com.athaydes.sdkman&#39;</span>
+apply plugin: <span style="color:#e6db74">&#39;java&#39;</span>
+</pre>
+<h3>Requirements</h3>
+
+<ul>
+<li>Gradle 5.0+</li>
+<li>Java 8+</li>
+</ul>
+
+<h3>Usage</h3>
+
+<p>You only need to apply this plugin to your project in order to use it.</p>
+
+<p>There&rsquo;s currently no configuration.</p>
+
+<p>Because this plugin won&rsquo;t run <code>sdk</code> for you, you&rsquo;re expected to run it manually, or automate it in your CI.</p>
+
+<p>Example workflow:</p>
+<pre style="color:#f8f8f2;background-color:#272822">cd my-project
+sdk env           <span style="color:#75715e"># load the JVM specified in .sdkmanrc</span>
+./gradlew build
+</pre>
+<blockquote>
+<p>Notice that <code>sdk env</code> is only required if you did not enable SDKMAN!&rsquo;s <code>sdkman_auto_env</code> property to <code>true</code>.
+See <a href="https://sdkman.io/usage#config">SDKMAN! Config</a> for instructions on setting properties.</p>
+</blockquote>
+
+<p>The value this plugin provides is that if you forget to run <code>sdk env</code>, your build will fail, preventing you from making
+mistakes.</p>
+
+<h3>Examples</h3>
+
+<p>Please find a few examples inside the <a href="https://github.com/renatoathaydes/sdkman-gradle-plugin/tree/master/examples">examples</a> directory.</p>
+
+<h3>Tasks</h3>
+
+<ul>
+<li><code>checkJavaVersion</code>  - checks that the Java versions (env, sys props, <code>sourceCompatibility</code>) all match.</li>
+<li><code>enforceSdkManRc</code>   - enforces that the Java home matches the <code>.sdkmanrc</code> JDK identifier.</li>
+</ul>
+
+<p>Dependency graph:</p>
+<pre style="color:#f8f8f2;background-color:#272822">AbstractCompile (all tasks of type)
+    dependsOn enforceSdkManRc
+        dependsOn checkJavaVersionTask
+</pre>
+<p>Because all compilation tasks depend on this plugin&rsquo;s tasks, you should never need to run this plugin&rsquo;s tasks
+explicitly (but you can, if you want).</p>
+
+<p>If anything goes wrong, the build fails with an error explaining what&rsquo;s wrong in detail.</p>
 </main>
 <footer>
-    Project created by <a href="https://renato.athaydes.com">Renato Athaydes</a>.
+    <div>Project created by <a href="https://renato.athaydes.com">Renato Athaydes</a>.</div>
+    <div><a href="https://gradle.org">Gradle</a> by ©Gradle Inc.,
+        <a href="https://sdkman.io">SDKMAN!</a> by <a href="https://github.com/sdkman">SDKMAN! contributors</a></div>
+    <div>License: Apache 2.0</div>
 </footer>
 </body>

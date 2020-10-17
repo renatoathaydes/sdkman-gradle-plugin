@@ -36,3 +36,19 @@ task testExamples {
 task check {
     dependsOn 'testExamples'
 }
+
+task magnanimous( type: Exec ) {
+    workingDir( file( 'website' ) )
+    commandLine( 'magnanimous', '-style', 'monokai' )
+}
+
+task website( type: Copy ) {
+    dependsOn 'magnanimous'
+    from file( 'website/target' )
+    into file( 'docs' )
+}
+
+task cleanWebsite( type: Delete ) {
+    delete file( 'docs' )
+    delete file( 'website/target' )
+}

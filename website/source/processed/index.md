@@ -1,6 +1,5 @@
-## SDKMAN! Gradle Plugin
-
-[https://renatoathaydes.github.io/sdkman-gradle-plugin](https://renatoathaydes.github.io/sdkman-gradle-plugin/index.html)
+{{ include /processed/fragments/_header.html }}
+{{ include /processed/fragments/_logo.html }}
 
 This plugin makes sure that [Gradle](https://gradle.org) is using a specific JDK, provided by [SDKMAN!](https://sdkman.io),
 to build your project.
@@ -66,7 +65,7 @@ Because this plugin won't run `sdk` for you, you're expected to run it manually,
 
 Example workflow:
 
-```
+```bash
 cd my-project
 sdk env           # load the JVM specified in .sdkmanrc
 ./gradlew build
@@ -80,7 +79,7 @@ mistakes.
 
 ### Examples
 
-Please find a few examples inside the [examples](examples) directory.
+Please find a few examples inside the [examples](https://github.com/renatoathaydes/sdkman-gradle-plugin/tree/master/examples) directory.
 
 ### Tasks
 
@@ -99,3 +98,5 @@ Because all compilation tasks depend on this plugin's tasks, you should never ne
 explicitly (but you can, if you want).
 
 If anything goes wrong, the build fails with an error explaining what's wrong in detail.
+
+{{ include /processed/fragments/_footer.html }}
