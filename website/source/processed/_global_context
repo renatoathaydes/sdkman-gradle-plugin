@@ -1,1 +1,1 @@
-{{ define basePath "sdkman-gradle-plugin" }}
+{{ define basePath "/sdkman-gradle-plugin" }}
