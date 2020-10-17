@@ -1,0 +1,21 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath "com.athaydes.gradle:sdkman-gradle-plugin:1.0-RC1"
+    }
+}
+
+apply plugin: 'com.athaydes.sdkman'
+apply plugin: 'java'
+
+version = '0.1.0'
+description = 'Shows how to configure Java and SDKMAN!'
+
+// this version must match the .sdkmanrc version
+sourceCompatibility = JavaVersion.VERSION_11
+
+// this version is not checked by the SDKMAN! Plugin
+// and can be anything supported by javac
+targetCompatibility = JavaVersion.VERSION_11

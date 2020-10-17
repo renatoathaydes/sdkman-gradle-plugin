@@ -1,0 +1,42 @@
+plugins {
+    id "com.gradle.plugin-publish" version "0.12.0"
+    id 'java-gradle-plugin'
+    id 'maven'
+}
+
+repositories {
+    jcenter()
+}
+
+group = 'com.athaydes.gradle'
+version = '1.0-RC1'
+description = 'A Gradle Plugin that enforces a specific SDKMAN! JVM is used by Gradle'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+gradlePlugin {
+    plugins {
+        sdkManPlugin {
+            id = 'com.athaydes.sdkman'
+            implementationClass = 'com.athaydes.gradle.sdkman.SdkManPlugin'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/renatoathaydes/sdkman-gradle-plugin'
+    vcsUrl = 'https://github.com/renatoathaydes/sdkman-gradle-plugin'
+    description = project.description
+    tags = ['sdkman', 'jdk']
+
+    plugins {
+        sdkManPlugin {
+            displayName = 'Gradle SDKMAN! Plugin'
+        }
+    }
+}

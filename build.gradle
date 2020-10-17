@@ -1,0 +1,38 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+void sh( String cmd, File workDir = rootDir ) {
+    def shell = Os.isFamily( Os.FAMILY_WINDOWS )
+            ? [ 'cmd', '/c', cmd ]
+            : [ System.getProperty( 'SHELL', 'bash' ), '-c', cmd ]
+    def proc = shell.execute( null as List, workDir )
+    def sysout = new StringBuilder()
+    def syserr = new StringBuilder()
+    proc.consumeProcessOutput( sysout, syserr )
+    def code = proc.waitFor()
+    if ( code != 0 ) {
+        throw new GradleException( "Command $cmd exited with $code\n" +
+                "------ sysout ------\n" +
+                "$sysout\n" +
+                "--------------\n" +
+                "------ syserr ------\n" +
+                "$syserr\n" +
+                "--------------" )
+    }
+}
+
+task testExamples {
+    doLast {
+        def sdkInit = System.getProperty( 'user.home' ) + '/.sdkman/bin/sdkman-init.sh'
+        def sdkEnv = "source $sdkInit && sdk env"
+        def gradle = Os.isFamily( Os.FAMILY_WINDOWS ) ? 'gradlew.bat' : './gradlew'
+
+        sh "$sdkEnv && ../../$gradle check", file( 'examples/simple' )
+        sh "$sdkEnv && ../../$gradle check", file( 'examples/full-example' )
+
+        println "All example projects built without errors!"
+    }
+}
+
+task check {
+    dependsOn 'testExamples'
+}

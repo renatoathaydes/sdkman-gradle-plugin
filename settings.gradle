@@ -1,0 +1,3 @@
+rootProject.name = 'sdkman-gradle-plugin'
+
+include 'sdkman-gradle-plugin'

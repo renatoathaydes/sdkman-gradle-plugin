@@ -1,0 +1,11 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath "com.athaydes.gradle:sdkman-gradle-plugin:1.0-RC1"
+    }
+}
+
+apply plugin: 'com.athaydes.sdkman'
+apply plugin: 'java'
