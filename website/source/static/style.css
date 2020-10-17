@@ -30,6 +30,10 @@ footer > div {
     line-height: 1.4em;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: #0076c6;
+}
+
 pre {
     padding: 1em;
 }
