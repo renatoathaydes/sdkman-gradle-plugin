@@ -1,5 +1,7 @@
 ## SDKMAN! Gradle Plugin
 
+[https://renatoathaydes.github.io/sdkman-gradle-plugin](https://renatoathaydes.github.io/sdkman-gradle-plugin/index.html)
+
 This plugin makes sure that Gradle is using a specific JDK, provided by [SDKMAN!](https://sdkman.io),
 to build your project.
 
