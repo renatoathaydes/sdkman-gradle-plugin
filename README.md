@@ -1,6 +1,7 @@
 ## SDKMAN! Gradle Plugin
 
-This plugin makes sure that Gradle is using a specific JDK, provided by SDKMAN!, to build your project.
+This plugin makes sure that Gradle is using a specific JDK, provided by [SDKMAN!](https://sdkman.io),
+to build your project.
 
 It does not run SDKMAN! itself, it only checks if the Java version you expect is being used (as explained below).
 
