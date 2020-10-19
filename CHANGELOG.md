@@ -9,8 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Integrate with Gradle 6.7+ [toolchains](https://docs.gradle.org/current/userguide/toolchains.html)
 
+## [1.0-RC2] - 2020-10-19
+
+### Added
+
+- support Java 8 (including Gradle running under JRE).
+
 ## [1.0-RC1] - 2020-10-17
 
 ### Added
 
-- Initial Commit!
+- Initial Version!
