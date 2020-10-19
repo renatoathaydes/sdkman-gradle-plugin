@@ -10,28 +10,26 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CheckJavaVersion extends DefaultTask {
 
     @TaskAction
-    public void checkJavaVersion() throws IOException {
+    public void checkJavaVersion() {
         String javaHomeProp = System.getProperty( "java.home" );
         String javaHomeEnv = System.getenv( "JAVA_HOME" );
 
         if ( javaHomeEnv == null ) {
-            throw new GradleException( "JAVA_HOME environment variable is not set. Please run 'sdk env'." );
+            throw new GradleException( "JAVA_HOME environment variable is not set. " +
+                    "Please run 'sdk env' or set it manually." );
         }
 
-        if ( !isSameLocation( javaHomeProp, javaHomeEnv ) ) {
-            throw new GradleException( "Java home conflict.\n" +
-                    "Current process  = " + javaHomeProp + "\n" +
-                    "JAVA_HOME envVar = " + javaHomeEnv );
-        }
-
+        checkJavaHomeConsistency( javaHomeProp, javaHomeEnv );
         checkSourceCompatibility();
     }
 
-    private boolean isSameLocation( String javaHomeProp, String javaHomeEnv ) throws IOException {
+    private void checkJavaHomeConsistency( String javaHomeProp, String javaHomeEnv ) {
         File prop = new File( javaHomeProp );
         File env = new File( javaHomeEnv );
 
@@ -40,22 +38,59 @@ public class CheckJavaVersion extends DefaultTask {
         }
 
         if ( javaHomeProp.equals( javaHomeEnv ) ) {
-            return true;
+            getLogger().debug( "JAVA_HOME matches java.home system property exactly: {}", javaHomeEnv );
+            return; // ok
         }
 
         // if the java tool resolves to the same exact path, the differences may be due to symlinks being used
-        Path javaFromProp = prop.toPath().resolve( Paths.get( "bin", "java" ) ).toRealPath();
-        Path javaFromEnv = env.toPath().resolve( Paths.get( "bin", "java" ) ).toRealPath();
-
-        if ( javaFromProp.equals( javaFromEnv ) ) {
-            getLogger().info( "java canonical path: {}", javaFromProp );
-            return true;
+        Path javaFromProp;
+        try {
+            javaFromProp = prop.toPath().resolve( Paths.get( "bin", "java" ) ).toRealPath();
+        } catch ( IOException e ) {
+            throw new GradleException( "Unable to find bin/java file under system property java.home=" + prop );
         }
 
-        getLogger().info( "java from 'java.home' system property: {}", javaFromProp );
-        getLogger().info( "java from 'JAVA_HOME' env var: {}", javaFromEnv );
+        Set<Path> candidateJavaLocations = getCandidateJavaLocations( env.toPath() );
 
-        return false;
+        if ( getLogger().isInfoEnabled() ) {
+            getLogger().info( "java from 'java.home' system property: {}", javaFromProp );
+            getLogger().info( "java candidates from 'JAVA_HOME' env var: {}", candidateJavaLocations );
+        }
+
+        if ( candidateJavaLocations.contains( javaFromProp ) ) {
+            return; // ok
+        }
+
+        throw new GradleException( "Java home conflict.\n" +
+                "Current process  = " + javaFromProp + "\n" +
+                "JAVA_HOME envVar = " + candidateJavaLocations );
+    }
+
+    private Set<Path> getCandidateJavaLocations( Path javaHome ) {
+        Path binJava = null;
+        try {
+            binJava = javaHome.resolve( Paths.get( "bin", "java" ) ).toRealPath();
+        } catch ( IOException e ) {
+            getLogger().info( "bin/java does not exist under JAVA_HOME={}", javaHome );
+        }
+        Path jreBinJava = null;
+        try {
+            jreBinJava = javaHome.resolve( Paths.get( "jre", "bin", "java" ) ).toRealPath();
+        } catch ( IOException e ) {
+            getLogger().info( "jre/bin/java does not exist under JAVA_HOME={}", javaHome );
+        }
+
+        Set<Path> result = new HashSet<>( 2 );
+        if ( binJava != null ) {
+            result.add( binJava );
+        }
+        if ( jreBinJava != null ) {
+            result.add( jreBinJava );
+        }
+        if ( result.isEmpty() ) {
+            throw new GradleException( "Cannot find bin/java or jre/bin/java under JAVA_HOME=" + javaHome );
+        }
+        return result;
     }
 
     private void checkSourceCompatibility() {
