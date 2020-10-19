@@ -1,0 +1,19 @@
+/ * Use this in real projects! */
+//plugins {
+//    id 'java'
+//    id 'com.athaydes.sdkman' version '1.0-RC1'
+//}
+
+/* configuration for testing locally built plugin */
+buildscript {
+    def version = new Properties().with {
+        file( '../../gradle.properties' ).withReader { r -> it.load( r ) }
+        it.getProperty( 'version' ) as String
+    }
+    dependencies {
+        classpath files( "../../sdkman-gradle-plugin/build/libs/sdkman-gradle-plugin-${version}.jar" )
+    }
+}
+
+apply plugin: 'com.athaydes.sdkman'
+apply plugin: 'java'

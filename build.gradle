@@ -29,6 +29,7 @@ task testExamples {
 
         sh "$sdkEnv && ../../$gradle check", file( 'examples/simple' )
         sh "$sdkEnv && ../../$gradle check", file( 'examples/full-example' )
+        sh "$sdkEnv && ../../$gradle check", file( 'examples/java8-example' )
 
         println "All example projects built without errors!"
     }
