@@ -13,7 +13,9 @@
     <img style="width: 48%;" src="/sdkman-gradle-plugin/images/gradle.jpg" alt="Gradle Logo">
     <img style="width: 48%;" src="/sdkman-gradle-plugin/images/sdkman.svg" alt="SDKMAN! Logo">
     <figcaption>Gradle and SDKMAN! working together to get your Java version managed automatically!</figcaption>
-</figure><p>This plugin makes sure that <a href="https://gradle.org">Gradle</a> is using a specific JDK, provided by <a href="https://sdkman.io">SDKMAN!</a>,
+</figure><p><a href="https://plugins.gradle.org/plugin/com.athaydes.sdkman"><img src="https://img.shields.io/maven-metadata/v?label=Plugin&amp;metadataUrl=https://plugins.gradle.org/m2/gradle/plugin/com/athaydes/gradle/sdkman-gradle-plugin/maven-metadata.xml" alt="Plugin Portal" /></a></p>
+
+<p>This plugin makes sure that <a href="https://gradle.org">Gradle</a> is using a specific JDK, provided by <a href="https://sdkman.io">SDKMAN!</a>,
 to build your project.</p>
 
 <p>It does not run SDKMAN! itself, it only checks if the Java version you expect is being used (as explained below).</p>
@@ -38,24 +40,29 @@ releasing a project that was tested on a different JVM.</p>
 
 <h3>Applying this Plugin</h3>
 
+<blockquote>
+<p>Check for the latest version on the top of this page, or in the
+<a href="https://plugins.gradle.org/plugin/com.athaydes.sdkman">Gradle Plugins Portal</a>.</p>
+</blockquote>
+
 <p>Add this plugin to your <code>plugins</code> block:</p>
 <pre style="color:#f8f8f2;background-color:#272822">plugins <span style="color:#f92672">{</span>
-    id <span style="color:#e6db74">&#39;com.athaydes.sdkman&#39;</span>
+    id <span style="color:#e6db74">&#34;com.athaydes.sdkman&#34;</span> version <span style="color:#e6db74">&#34;&lt;version&gt;&#34;</span>
 <span style="color:#f92672">}</span>
 </pre>
 <p>Or using the older syntax:</p>
 <pre style="color:#f8f8f2;background-color:#272822">buildscript <span style="color:#f92672">{</span>
-    repositories <span style="color:#f92672">{</span>
-        maven <span style="color:#f92672">{</span>
-            url <span style="color:#e6db74">&#34;https://plugins.gradle.org/m2/&#34;</span>
-        <span style="color:#f92672">}</span>
+  repositories <span style="color:#f92672">{</span>
+    maven <span style="color:#f92672">{</span>
+      url <span style="color:#e6db74">&#34;https://plugins.gradle.org/m2/&#34;</span>
     <span style="color:#f92672">}</span>
-    dependencies <span style="color:#f92672">{</span>
-        classpath <span style="color:#e6db74">&#34;com.athaydes.gradle:sdkman-gradle-plugin:&lt;version&gt;&#34;</span>
-    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+  dependencies <span style="color:#f92672">{</span>
+    classpath <span style="color:#e6db74">&#34;gradle.plugin.com.athaydes.gradle:sdkman-gradle-plugin:&lt;version&gt;&#34;</span>
+  <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 
-apply plugin: <span style="color:#e6db74">&#39;com.athaydes.sdkman&#39;</span>
+apply plugin: <span style="color:#e6db74">&#34;com.athaydes.sdkman&#34;</span>
 apply plugin: <span style="color:#e6db74">&#39;java&#39;</span>
 </pre>
 <h3>Requirements</h3>
