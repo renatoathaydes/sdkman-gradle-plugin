@@ -1,7 +1,6 @@
 {{ include /processed/fragments/_header.html }}
 {{ include /processed/fragments/_logo.html }}
-
-[![Plugin Portal](https://img.shields.io/maven-metadata/v?label=Plugin&metadataUrl=https://plugins.gradle.org/m2/gradle/plugin/com/athaydes/gradle/sdkman-gradle-plugin/maven-metadata.xml)](https://plugins.gradle.org/plugin/com.athaydes.sdkman)
+{{ include /processed/fragments/_badges.html }}
 
 This plugin makes sure that [Gradle](https://gradle.org) is using a specific JDK, provided by [SDKMAN!](https://sdkman.io),
 to build your project.

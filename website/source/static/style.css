@@ -21,34 +21,63 @@ main {
 
 footer {
   padding: 1em;
-  background-color: #3333;
+  background: #0076c6;
+  color: white;
+}
+
+footer a {
+  color: #ffb8b8;
 }
 
 footer > div {
-    width: 100%;
-    text-align: center;
-    line-height: 1.4em;
+  width: 100%;
+  text-align: center;
+  line-height: 1.4em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #0076c6;
+  color: #0076c6;
 }
 
 pre {
-    padding: 1em;
+  padding: 1em;
 }
 
 code {
-    background: #eeeeee;
-    font-size: 0.7em;
-    padding: 0.2em;
+  background: #eeeeee;
+  font-size: 0.7em;
+  padding: 0.2em;
+  border-radius: 0.4em;
 }
 
 figcaption {
-    font-size: small;
-    margin: 0.3em 0 0 0;
+  font-size: small;
+  margin: 0.3em 0 0 0;
 }
 
 figure {
-    margin: 2em 0 2em 0;
+  margin: 2em 0 2em 0;
+}
+
+div.badges {
+  display: flex;
+  align-items: flex-start;
+}
+
+a.release-notes {
+  background: #0076c6;
+  color: white;
+  font-size: small;
+  padding: 0.1em 0.8em 0.3em 0.8em;
+  border-radius: 0.2em;
+  margin-left: 0.5em;
+}
+
+blockquote {
+  border: solid 1px #FB2127;
+  color: #0076c6;
+  margin: 0;
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  font-style: italic;
+  font-size: smaller;
 }
