@@ -9,7 +9,6 @@ repositories {
 }
 
 group = 'com.athaydes.gradle'
-version = '1.0-RC1'
 description = 'A Gradle Plugin that enforces a specific SDKMAN! JVM is used by Gradle'
 
 sourceCompatibility = JavaVersion.VERSION_1_8

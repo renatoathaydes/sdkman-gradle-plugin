@@ -21,6 +21,7 @@ void sh( String cmd, File workDir = rootDir ) {
 }
 
 task testExamples {
+    dependsOn ':sdkman-gradle-plugin:jar'
     doLast {
         def sdkInit = System.getProperty( 'user.home' ) + '/.sdkman/bin/sdkman-init.sh'
         def sdkEnv = "source $sdkInit && sdk env"
