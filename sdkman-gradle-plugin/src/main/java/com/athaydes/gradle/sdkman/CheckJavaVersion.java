@@ -61,9 +61,9 @@ public class CheckJavaVersion extends DefaultTask {
             return; // ok
         }
 
-        throw new GradleException( "Java home conflict.\n" +
-                "Current process  = " + javaFromProp + "\n" +
-                "JAVA_HOME envVar = " + candidateJavaLocations );
+        throw new GradleException( "JAVA_HOME env var does not match the current process.\n" +
+                "Current java process:    " + javaFromProp + "\n" +
+                "Possible java locations: " + javaHomeEnv );
     }
 
     private Set<Path> getCandidateJavaLocations( Path javaHome ) {

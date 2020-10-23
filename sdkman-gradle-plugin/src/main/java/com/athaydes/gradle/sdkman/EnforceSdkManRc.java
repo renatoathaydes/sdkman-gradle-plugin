@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Optional;
 import java.util.Properties;
 
 public class EnforceSdkManRc extends DefaultTask {
@@ -28,9 +30,6 @@ public class EnforceSdkManRc extends DefaultTask {
 
     @TaskAction
     public void enforceSdkManRc() {
-        String javaHome = System.getenv( "JAVA_HOME" );
-        String currentJavaVersion = findJavaFullVersionFromJavaHome( javaHome );
-
         String sdkmanJavaVersion;
         try {
             sdkmanJavaVersion = readSdkManRcJavaVersion();
@@ -38,15 +37,9 @@ public class EnforceSdkManRc extends DefaultTask {
             throw new GradleException( "SDKMAN! Plugin unable to read .sdkmanrc file" );
         }
 
-        getLogger().debug( ".sdkmanrc java version={}, current java version={}",
-                sdkmanJavaVersion, currentJavaVersion );
+        String javaHome = System.getenv( "JAVA_HOME" );
 
-        if ( !sdkmanJavaVersion.equals( currentJavaVersion ) ) {
-            throw new GradleException( String.format(
-                    "SDKMAN! .sdkmanrc java version (%s) does not match this process' Java version (%s).\n" +
-                            "Run 'sdkman env' to set the proper Java version.",
-                    sdkmanJavaVersion, currentJavaVersion ) );
-        }
+        enforce( javaHome, sdkmanJavaVersion );
     }
 
     private String readSdkManRcJavaVersion() throws IOException {
@@ -69,13 +62,32 @@ public class EnforceSdkManRc extends DefaultTask {
         return javaValue.toString();
     }
 
-    static String findJavaFullVersionFromJavaHome( String javaHome ) {
+    static void enforce( String javaHome,
+                         String sdkManJavaVersion ) {
+        Optional<String> actualVersion = findJavaVersionInLocalSdkManInstallation( javaHome );
+        String error = "";
+        if ( actualVersion.isPresent() ) {
+            if ( !actualVersion.get().equals( sdkManJavaVersion ) ) {
+                error = "JAVA_HOME (" + javaHome + ") seems to indicate Java version " + actualVersion.get() +
+                        ", but .sdkmanrc Java version is " + sdkManJavaVersion;
+            }
+        } else {
+            if ( !isJavaVersionInJavaHomePath( javaHome, sdkManJavaVersion ) ) {
+                error = "JAVA_HOME (" + javaHome + ") does not seem to contain a Java version matching the" +
+                        " .sdkmanrc version (" + sdkManJavaVersion + ")";
+            }
+        }
+        if ( !error.isEmpty() ) {
+            throw new GradleException( error );
+        }
+    }
+
+    static Optional<String> findJavaVersionInLocalSdkManInstallation( String javaHome ) {
         String candidatesJavaPath = Paths.get( "candidates", "java" ).toString() + File.separator;
         int candidatesJavaPathIndex = javaHome.indexOf( candidatesJavaPath );
 
         if ( candidatesJavaPathIndex < 0 ) {
-            throw new GradleException( "JAVA_HOME env var does not seem to be set to SDKMAN " +
-                    "(should contain 'candidates/java/<version>')! JAVA_HOME=" + javaHome );
+            return Optional.empty();
         }
 
         int javaVersionIndex = candidatesJavaPathIndex + candidatesJavaPath.length();
@@ -85,7 +97,36 @@ public class EnforceSdkManRc extends DefaultTask {
             nextPathSeparatorIndex = javaHome.length();
         }
 
-        return javaHome.substring( javaVersionIndex, nextPathSeparatorIndex );
+        return Optional.of( javaHome.substring( javaVersionIndex, nextPathSeparatorIndex ) );
+    }
+
+    static boolean isJavaVersionInJavaHomePath( String javaHome, String expectedVersion ) {
+        File file = new File( javaHome );
+        if ( !file.isDirectory() ) {
+            return false;
+        }
+        int levels = 0;
+        final int maxLevels = 4;
+        while ( file != null && levels < maxLevels ) {
+            if ( isVersionMatch( file.toPath(), expectedVersion ) ) {
+                return true;
+            }
+            file = file.getParentFile();
+            levels++;
+        }
+        return false;
+    }
+
+    private static boolean isVersionMatch( Path path, String expectedVersion ) {
+        String name = Optional.ofNullable( path.getFileName() )
+                .map( Object::toString )
+                .orElse( "" );
+
+        if ( name.startsWith( "java-" ) ) {
+            name = name.substring( "java-".length() );
+        }
+
+        return name.equals( expectedVersion );
     }
 
 }
