@@ -19,7 +19,7 @@ jobs:
     - name: Set up JDK 1.8
       uses: renatoathaydes/setup-java-sdkman@v2.0
       with:
-        java-version: 8.0.265-zulu
+        java-version: 8.0.272-zulu
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build
@@ -34,7 +34,7 @@ jobs:
     - name: Set up JDK 1.8
       uses: renatoathaydes/setup-java-sdkman@v2.0
       with:
-        java-version: 8.0.265-zulu
+        java-version: 8.0.272-zulu
     - name: Set up JDK 11 with JavaFX
       uses: renatoathaydes/setup-java-sdkman@v2.0
       with:
