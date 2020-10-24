@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
-      uses: renatoathaydes/setup-java-sdkman@v2.0
+      uses: renatoathaydes/setup-java-sdkman@v2.1.0
       with:
         java-version: 8.0.272-zulu
     - name: Grant execute permission for gradlew
@@ -32,7 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
-      uses: renatoathaydes/setup-java-sdkman@v2.0
+      uses: renatoathaydes/setup-java-sdkman@v2.1.0
       with:
         java-version: 8.0.272-zulu
     - name: Set up JDK 11 with JavaFX
