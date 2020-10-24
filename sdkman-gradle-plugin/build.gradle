@@ -2,8 +2,7 @@ plugins {
     id "com.gradle.plugin-publish" version "0.12.0"
     id 'java-gradle-plugin'
     id 'maven'
-    // FIXME release without self checks, then re-enable this
-    //id "com.athaydes.sdkman" version "1.0-RC2"
+    id "com.athaydes.sdkman" version "1.0-RC3"
 }
 
 repositories {
