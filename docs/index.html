@@ -114,6 +114,20 @@ mistakes.</p>
 explicitly (but you can, if you want).</p>
 
 <p>If anything goes wrong, the build fails with an error explaining what&rsquo;s wrong in detail.</p>
+
+<h3>Using SDKMAN in GitHub Actions</h3>
+
+<p>To run your builds in a CI (Continuous Integration system), you&rsquo;ll need to get SDKMAN! to manage
+your Java versions also in your CI environment.</p>
+
+<p>If you use <a href="https://github.com/marketplace">GitHub Actions</a>,
+the <a href="https://github.com/marketplace/actions/setup-java-jdk-with-sdkman">setup-java-sdkman</a> action can be used for that.</p>
+
+<p>See <a href="https://github.com/renatoathaydes/sdkman-gradle-plugin/blob/master/.github/workflows/test.yml">this project&rsquo;s CI Workflow</a>
+for an example!</p>
+
+<p>Using this plugin and <code>setup-java-sdkman</code> you ensure your builds and tests always run with the exact Java version
+you want, locally and in CI.</p>
 </main>
 <footer>
     <div>Project created by <a href="https://renato.athaydes.com">Renato Athaydes</a>.</div>
