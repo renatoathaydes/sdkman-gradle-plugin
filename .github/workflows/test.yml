@@ -32,6 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
+      id: setup-java8
       uses: renatoathaydes/setup-java-sdkman@v2.1.0
       with:
         java-version: 8.0.272-zulu
@@ -45,6 +46,8 @@ jobs:
         java-version: 11.0.2-open
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: Use Java 8 to build this plugin
+      run: "${{ steps.setup-java8.outputs.sdkCommand }} use java 8.0.272-zulu"
     - name: Build
       run: ./gradlew build
     - name: Test Examples
