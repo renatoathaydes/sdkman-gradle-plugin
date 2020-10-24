@@ -81,6 +81,10 @@ apply plugin: <span style="color:#e6db74">&#39;java&#39;</span>
 
 <p>Because this plugin won&rsquo;t run <code>sdk</code> for you, you&rsquo;re expected to run it manually, or automate it in your CI.</p>
 
+<blockquote>
+<p>For usage with GitHub Actions, see the <a href="#using-sdkman-in-github-actions">specific section</a> about it.</p>
+</blockquote>
+
 <p>Example workflow:</p>
 <pre style="color:#f8f8f2;background-color:#272822">cd my-project
 sdk env           <span style="color:#75715e"># load the JVM specified in .sdkmanrc</span>
@@ -114,6 +118,8 @@ mistakes.</p>
 explicitly (but you can, if you want).</p>
 
 <p>If anything goes wrong, the build fails with an error explaining what&rsquo;s wrong in detail.</p>
+
+<div id="using-sdkman-in-github-actions"></div>
 
 <h3>Using SDKMAN in GitHub Actions</h3>
 

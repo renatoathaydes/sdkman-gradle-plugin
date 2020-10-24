@@ -67,6 +67,8 @@ There's currently no configuration.
 
 Because this plugin won't run `sdk` for you, you're expected to run it manually, or automate it in your CI.
 
+> For usage with GitHub Actions, see the [specific section](#using-sdkman-in-github-actions) about it.
+
 Example workflow:
 
 ```bash
@@ -102,6 +104,8 @@ Because all compilation tasks depend on this plugin's tasks, you should never ne
 explicitly (but you can, if you want).
 
 If anything goes wrong, the build fails with an error explaining what's wrong in detail.
+
+<div id="using-sdkman-in-github-actions"></div>
 
 ### Using SDKMAN in GitHub Actions
 
