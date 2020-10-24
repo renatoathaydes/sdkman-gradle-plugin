@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Integrate with Gradle 6.7+ [toolchains](https://docs.gradle.org/current/userguide/toolchains.html)
 
+## [1.0-RC3] - 2020-10-24
+
+### Fixed
+
+- Properly detect Java version from JAVA_HOME when running in CI environment (GitHub Actions).
+
 ## [1.0-RC2] - 2020-10-19
 
 ### Added
