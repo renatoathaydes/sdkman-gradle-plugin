@@ -13,7 +13,15 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.tools.ant.taskdefs.condition.Os;
+
 public class CheckJavaVersion extends DefaultTask {
+
+    private final String javaExecutableName;
+
+    public CheckJavaVersion() {
+	javaExecutableName = Os.isFamily(Os.FAMILY_WINDOWS) ? "java.exe" : "java";
+    }
 
     @TaskAction
     public void checkJavaVersion() {
@@ -45,7 +53,7 @@ public class CheckJavaVersion extends DefaultTask {
         // if the java tool resolves to the same exact path, the differences may be due to symlinks being used
         Path javaFromProp;
         try {
-            javaFromProp = prop.toPath().resolve( Paths.get( "bin", "java" ) ).toRealPath();
+            javaFromProp = prop.toPath().resolve( Paths.get("bin", javaExecutableName) ).toRealPath();
         } catch ( IOException e ) {
             throw new GradleException( "Unable to find bin/java file under system property java.home=" + prop );
         }
@@ -69,15 +77,15 @@ public class CheckJavaVersion extends DefaultTask {
     private Set<Path> getCandidateJavaLocations( Path javaHome ) {
         Path binJava = null;
         try {
-            binJava = javaHome.resolve( Paths.get( "bin", "java" ) ).toRealPath();
+            binJava = javaHome.resolve( Paths.get( "bin", javaExecutableName ) ).toRealPath();
         } catch ( IOException e ) {
             getLogger().info( "bin/java does not exist under JAVA_HOME={}", javaHome );
         }
         Path jreBinJava = null;
         try {
-            jreBinJava = javaHome.resolve( Paths.get( "jre", "bin", "java" ) ).toRealPath();
+            jreBinJava = javaHome.resolve( Paths.get("jre", "bin", javaExecutableName) ).toRealPath();
         } catch ( IOException e ) {
-            getLogger().info( "jre/bin/java does not exist under JAVA_HOME={}", javaHome );
+            getLogger().info( "jre/bin/{} does not exist under JAVA_HOME={}", javaExecutableName, javaHome );
         }
 
         Set<Path> result = new HashSet<>( 2 );
@@ -88,7 +96,7 @@ public class CheckJavaVersion extends DefaultTask {
             result.add( jreBinJava );
         }
         if ( result.isEmpty() ) {
-            throw new GradleException( "Cannot find bin/java or jre/bin/java under JAVA_HOME=" + javaHome );
+            throw new GradleException( "Cannot find bin/java or jre/bin/" + javaExecutableName + " under JAVA_HOME=" + javaHome );
         }
         return result;
     }
