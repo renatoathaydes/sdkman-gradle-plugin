@@ -5,18 +5,19 @@ import org.gradle.api.Project;
 import org.gradle.api.tasks.compile.AbstractCompile;
 
 public class SdkManPlugin implements Plugin<Project> {
+
     @Override
-    public void apply( Project project ) {
+    public void apply(Project project) {
         CheckJavaVersion checkJavaVersionTask = project.getTasks()
-                .create( "checkJavaVersion", CheckJavaVersion.class );
+                .create("checkJavaVersion", CheckJavaVersion.class);
 
         EnforceSdkManRc enforceSdkManRc = project.getTasks()
-                .create( "enforceSdkManRc", EnforceSdkManRc.class );
+                .create("enforceSdkManRc", EnforceSdkManRc.class);
 
-        enforceSdkManRc.dependsOn( checkJavaVersionTask );
+        enforceSdkManRc.dependsOn(checkJavaVersionTask);
 
-        project.getTasks().withType( AbstractCompile.class, ( compilation ) -> {
-            compilation.dependsOn( enforceSdkManRc );
-        } );
+        project.getTasks().withType(AbstractCompile.class, (compilation) -> {
+            compilation.dependsOn(enforceSdkManRc);
+        });
     }
 }
