@@ -1,19 +1,14 @@
 plugins {
     id "com.gradle.plugin-publish" version "0.12.0"
     id 'java-gradle-plugin'
-    id 'maven'
-    id "com.athaydes.sdkman" version "1.0-RC3"
-}
-
-repositories {
-    jcenter()
+//    id "com.athaydes.sdkman" version "1.0-RC3"
 }
 
 group = 'com.athaydes.gradle'
 description = 'A Gradle Plugin that enforces a specific SDKMAN! JVM is used by Gradle'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 dependencies {
     testImplementation 'junit:junit:4.12'
