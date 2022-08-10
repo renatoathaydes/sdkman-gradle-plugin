@@ -26,13 +26,13 @@ releasing a project that was tested on a different JVM.
 ### Applying this Plugin
 
 > Check for the latest version on the top of this page, or in the
-> [Gradle Plugins Portal](https://plugins.gradle.org/plugin/com.athaydes.sdkman).
+> [Gradle Plugins Portal](https://plugins.gradle.org/plugin/de.ochmanski.sdkman).
 
 Add this plugin to your `plugins` block:
 
 ```groovy
 plugins {
-    id "com.athaydes.sdkman" version "<version>"
+    id "de.ochmanski.sdkman" version "<version>"
 }
 ```
 
@@ -46,11 +46,11 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.athaydes.gradle:sdkman-gradle-plugin:<version>"
+    classpath "gradle.plugin.de.ochmanski.gradle:sdkman-gradle-plugin:<version>"
   }
 }
 
-apply plugin: "com.athaydes.sdkman"
+apply plugin: "de.ochmanski.sdkman"
 apply plugin: 'java'
 ```
 
@@ -85,7 +85,7 @@ mistakes.
 
 ### Examples
 
-Please find a few examples inside the [examples](https://github.com/renatoathaydes/sdkman-gradle-plugin/tree/master/examples) directory.
+Please find a few examples inside the [examples](https://github.com/lukaszochmanski/sdkman-gradle-plugin/tree/master/examples) directory.
 
 ### Tasks
 
@@ -115,7 +115,7 @@ your Java versions also in your CI environment.
 If you use [GitHub Actions](https://github.com/marketplace), 
 the [setup-java-sdkman](https://github.com/marketplace/actions/setup-java-jdk-with-sdkman) action can be used for that.
 
-See [this project's CI Workflow](https://github.com/renatoathaydes/sdkman-gradle-plugin/blob/master/.github/workflows/test.yml)
+See [this project's CI Workflow](https://github.com/lukaszochmanski/sdkman-gradle-plugin/blob/master/.github/workflows/test.yml)
 for an example!
 
 Using this plugin and `setup-java-sdkman` you ensure your builds and tests always run with the exact Java version

@@ -1,10 +1,10 @@
 plugins {
     id "com.gradle.plugin-publish" version "0.12.0"
     id 'java-gradle-plugin'
-//    id "com.athaydes.sdkman" version "1.0-RC3"
+//    id "de.ochmanski.sdkman" version "1.0-RC3"
 }
 
-group = 'com.athaydes.gradle'
+group = 'de.ochmanski.gradle'
 description = 'A Gradle Plugin that enforces a specific SDKMAN! JVM is used by Gradle'
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -17,15 +17,15 @@ dependencies {
 gradlePlugin {
     plugins {
         sdkManPlugin {
-            id = 'com.athaydes.sdkman'
-            implementationClass = 'com.athaydes.gradle.sdkman.SdkManPlugin'
+            id = 'de.ochmanski.sdkman'
+            implementationClass = 'de.ochmanski.gradle.sdkman.SdkManPlugin'
         }
     }
 }
 
 pluginBundle {
-    website = 'https://renatoathaydes.github.io/sdkman-gradle-plugin/index.html'
-    vcsUrl = 'https://github.com/renatoathaydes/sdkman-gradle-plugin'
+    website = 'https://lukaszochmanski.github.io/sdkman-gradle-plugin/index.html'
+    vcsUrl = 'https://github.com/lukaszochmanski/sdkman-gradle-plugin'
     description = project.description
     tags = ['sdkman', 'jdk']
 

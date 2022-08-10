@@ -1,4 +1,4 @@
-package com.athaydes.gradle.sdkman;
+package de.ochmanski.gradle.sdkman;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

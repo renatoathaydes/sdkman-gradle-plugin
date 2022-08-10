@@ -1,4 +1,4 @@
-package com.athaydes.gradle.sdkman;
+package de.ochmanski.gradle.sdkman;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
